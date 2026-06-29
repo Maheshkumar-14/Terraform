@@ -1,16 +1,10 @@
-# Terraform
-  **  Notes  **
-  # Terraform AWS Infrastructure using Modules
+--- MODULES ---
 
 A Terraform module is a collection of Terraform configuration files (.tf files) that are grouped together to perform a specific task. Modules help organize, reuse, and manage infrastructure code efficiently.
 
-
 In simple terms, a module is like a reusable building block. Instead of writing the same Terraform code multiple times, you write it once in a module and use it wherever needed.
 
-
-Why Use Modules?
-
-Modules provide several advantages:
+--- Advantages ---
 
 Code Reusability – Write the infrastructure code once and reuse it in multiple projects.
 Better Organization – Separate resources such as VPC, EC2, Security Groups, and Load Balancers into different modules.
@@ -18,73 +12,8 @@ Easy Maintenance – Changes made inside a module are automatically reflected wh
 Consistency – Ensures the same infrastructure configuration is deployed across different environments (Development, Testing, Production).
 Scalability – Makes it easier to manage large and complex infrastructure projects.
 Collaboration – Different team members can work on different modules independently.
-Types of Modules
-Root Module
-The main Terraform configuration from which you run Terraform commands (terraform init, terraform plan, terraform apply).
-It calls other child modules.
-Child Module
-A reusable module that is called by the root module or another module.
-Examples include VPC, EC2, Security Group, RDS, or Load Balancer modules.
-Example
-Root Module
-     │
-     ├── Calls VPC Module
-     ├── Calls Security Group Module
-     └── Calls EC2 Module
 
-
-The root module coordinates the deployment by passing inputs to child modules and using their outputs.
-
-
-
-## Project Structure
-
-```text
-terraform-project/
-│
-├── main.tf
-├── variables.tf
-├── terraform.tfvars
-├── provider.tf
-├── outputs.tf
-├── README.md
-│
-└── modules/
-    ├── VPC/
-    │   ├── main.tf
-    │   ├── variables.tf
-    │   └── outputs.tf
-    │
-    ├── SG/
-    │   ├── main.tf
-    │   ├── variables.tf
-    │   └── outputs.tf
-    │
-    └── EC2/
-        ├── main.tf
-        ├── variables.tf
-        └── outputs.tf
-```
-
----
-
-# Root Files
-
-## provider.tf
-
-Defines the AWS provider and the AWS region where the infrastructure will be created.
-
-Example:
-
-```hcl
-provider "aws" {
-  region = var.region
-}
-```
-
----
-
-## main.tf
+## Root main.tf
 
 Acts as the entry point of the project.
 
@@ -105,9 +34,7 @@ Security Group Module
      │
      ▼
 EC2 Module
-```
-
----
+--------------
 
 ## variables.tf
 
@@ -143,8 +70,6 @@ vpc_cidr = "10.0.0.0/16"
 ```
 
 Separating values from code makes it easier to reuse the same project in different environments.
-
----
 
 # Modules
 
@@ -235,105 +160,3 @@ Terraform Resources
 ```
 
 ---
-
-# Module Output Flow
-
-The modules communicate using outputs.
-
-```
-VPC Module
-    │
-    ├── outputs vpc_id
-    ├── outputs public_subnet_id
-    │
-    ▼
-Security Group Module
-    │
-    ├── Creates Security Group
-    ├── outputs sg_id
-    │
-    ▼
-EC2 Module
-    │
-    ├── Receives subnet_id
-    ├── Receives sg_id
-    └── Launches EC2 Instance
-```
-
----
-
-# Terraform Commands
-
-Initialize Terraform
-
-```bash
-terraform init
-```
-
-Validate Configuration
-
-```bash
-terraform validate
-```
-
-Format Code
-
-```bash
-terraform fmt
-```
-
-Preview Infrastructure
-
-```bash
-terraform plan
-```
-
-Create Infrastructure
-
-```bash
-terraform apply
-```
-
-Destroy Infrastructure
-
-```bash
-terraform destroy
-```
-
----
-
-# Learning Objectives
-
-This project demonstrates:
-
-* Terraform Modules
-* Input Variables
-* Output Values
-* Module Communication
-* AWS VPC Creation
-* Public Subnet Creation
-* Internet Gateway Configuration
-* Route Table Configuration
-* Security Group Creation
-* EC2 Instance Provisioning
-* Infrastructure as Code (IaC) Best Practices
-
----
-
-# Technologies Used
-
-* Terraform
-* AWS EC2
-* AWS VPC
-* AWS Security Groups
-* AWS Internet Gateway
-* AWS Route Tables
-
----
-
-# Author
-
-**Mahi**
-
-This project was created as part of my DevOps learning journey to understand Terraform modules, reusable infrastructure, and AWS resource provisioning.
-

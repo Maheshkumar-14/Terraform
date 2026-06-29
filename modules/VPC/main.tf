@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 
-# create the VPC 
+#VPC 
 resource "aws_vpc" "My_vpc" {
   cidr_block = var.vpc_cidr
 
@@ -12,7 +12,7 @@ resource "aws_vpc" "My_vpc" {
   }
 }
 
-# Create the public subnet
+#public subnet
 resource "aws_subnet" "public_subnet" {
   vpc_id     = aws_vpc.My_vpc.id
   cidr_block = var.public_subnet_cidr
@@ -22,7 +22,7 @@ resource "aws_subnet" "public_subnet" {
   }
 }
 
-# Create the Private subnet
+#Private subnet
 resource "aws_subnet" "private_subnet" {
   vpc_id     = aws_vpc.My_vpc.id
   cidr_block = var.private_subnet_cidr
@@ -58,7 +58,5 @@ resource "aws_route_table_association" "rt_association" {
 
   subnet_id      = aws_subnet.public_subnet.id
   route_table_id = aws_route_table.route_table.id
-
-
 }
 
